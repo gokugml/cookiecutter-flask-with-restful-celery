@@ -19,13 +19,20 @@ TEST_PATH = os.path.join(PROJECT_ROOT, "tests")
     is_flag=True,
     help="Show coverage report",
 )
-def test(coverage):
+@click.option(
+    "-f",
+    "--files",
+    help="test specific file/function for pytest",
+)
+def test(coverage, files):
     """Run the tests."""
     import pytest
 
     args = [TEST_PATH, "--verbose"]
     if coverage:
         args.append("--cov={{cookiecutter.app_name}}")
+    if files:
+        args.append(files)
     rv = pytest.main(args)
     exit(rv)
 
