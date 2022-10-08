@@ -56,12 +56,18 @@ interactions: List[columbo.Interaction] = [
     ),
     columbo.BasicQuestion(
         "project_name",
-        "What is the name of your project?",
+        "What is the name of your project?\nproject_name.app_name.sample_app_name",
         default="My Flask App",
     ),
     columbo.BasicQuestion(
         "app_name",
-        "What will the package import name be?\nThis will be the name used in python code to import from the module",
+        "What will the package import name be?\nproject_name.app_name.sample_app_name",
+        default=_normalize_application_name,
+        validator=validate_package_import_name,
+    ),
+    columbo.BasicQuestion(
+        "sample_app_name",
+        "What will apps/services import name be?\nproject_name.app_name.sample_app_name",
         default=_normalize_application_name,
         validator=validate_package_import_name,
     ),
