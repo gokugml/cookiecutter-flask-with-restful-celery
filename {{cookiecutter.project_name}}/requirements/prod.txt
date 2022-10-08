@@ -9,9 +9,23 @@ Werkzeug==2.2.2
 Flask-SQLAlchemy==3.0.0
 psycopg2-binary==2.9.4
 SQLAlchemy==1.4.41
+pymysql
+redis
 
 # Migrations
 Flask-Migrate==3.1.0
+
+# serializer
+marshmallow-sqlalchemy
+flask-marshmallow
+
+# restful api
+flask-restful
+
+# api document
+apispec[yaml]
+apispec-webframeworks
+
 
 # Forms
 email-validator==1.3.0
