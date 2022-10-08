@@ -1,13 +1,13 @@
 {
   "full_name": "",
   "email": "",
-  "github_username": "",
-  "project_name": "",
-  "app_name": "",
-  "sample_app_name": "",
+  "github_username": "github_username",
+  "project_name": "project_name",
+  "app_name": "app_name",
+  "sample_app_name": "sample_app_name",
   "project_short_description": "",
-  "use_pipenv": "",
-  "python_version": "",
-  "node_version": "",
-  "use_heroku": ""
+  "use_pipenv": ["False", "True"],
+  "python_version": ["3.10", "3.9", "3.8", "3.7"],
+  "node_version": ["16", "14", "12"],
+  "use_heroku": ["False", "True"]
 }
