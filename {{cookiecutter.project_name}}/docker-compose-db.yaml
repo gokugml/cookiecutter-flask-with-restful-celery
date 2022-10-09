@@ -5,7 +5,7 @@ version: "3"
 services:
   mysql8:
     platform: linux/amd64 # 不加这行会报：ERROR: no matching manifest for linux/arm64/v8 in the manifest list entries
-    container_name: mysql8
+    container_name: {{cookiecutter.project_name-}}mysql8
     image: mysql:8.0 # 镜像会从 docker hub 中拉取。地址: https://hub.docker.com/_/mysql?
     ports:
       - "3306:3306" # 冒号左边的宿主机的端口，右边的是容器的端口
@@ -14,7 +14,7 @@ services:
       MYSQL_ROOT_PASSWORD: 123456 # root 账号的密码
 
   redis:
-    container_name: redis
+    container_name: {{cookiecutter.project_name-}}redis
     image: redis:latest
     ports:
       - "6379:6379"
@@ -25,7 +25,7 @@ services:
     command: redis-server /etc/redis/redis.conf
 
   # memcahed:
-  #   container_name: memcahed
+  #   container_name: {{cookiecutter.project_name-}}memcahed
   #   image: memcached:latest
   #  # restart: always
   #   ports:

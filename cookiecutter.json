@@ -6,6 +6,7 @@
   "app_name": "app_name",
   "sample_app_name": "sample_app_name",
   "project_short_description": "",
+  "use_celery": ["no", "yes"],
   "use_pipenv": ["False", "True"],
   "python_version": ["3.10", "3.9", "3.8", "3.7"],
   "node_version": ["16", "14", "12"],

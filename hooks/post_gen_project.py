@@ -13,6 +13,8 @@ def clean_extra_package_management_files():
     use_pipenv = "{{cookiecutter.use_pipenv}}"
     use_heroku = "{{cookiecutter.use_heroku}}"
     use_github = "{{cookiecutter.github_username}}"
+    use_celery = "{{cookiecutter.use_celery}}"
+
     to_delete = []
 
     if use_pipenv == "True":
@@ -26,6 +28,16 @@ def clean_extra_package_management_files():
     if use_github == "":
         to_delete = to_delete + [".github"]
 
+    if use_celery == "no":
+        base_path = os.getcwd()
+        app_path = os.path.join(
+            base_path,
+            '{{cookiecutter.app_name}}'
+        )
+        tasks_path = os.path.join(app_path, '{{cookiecutter.sample_app_name}}', 'tasks.py')
+        celery_app_path = os.path.join(app_path, 'celery_app.py')
+        to_delete = to_delete + [tasks_path, celery_app_path]
+        
     try:
         for file_or_dir in to_delete:
             if os.path.isfile(file_or_dir):

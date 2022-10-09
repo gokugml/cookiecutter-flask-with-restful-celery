@@ -8,7 +8,8 @@ from flask import Flask, render_template
 from {{cookiecutter.app_name}} import commands, public, user
 from {{cookiecutter.app_name}}.extensions import (
     bcrypt,
-    cache,
+    cache,  
+{% if cookiecutter.use_celery == "yes"%}    celery,{% endif%}
     csrf_protect,
     apispec,
     db,
@@ -29,6 +30,9 @@ def create_app(config_object="{{cookiecutter.app_name}}.settings"):
     register_extensions(app)
     register_apispec(app)
     register_blueprints(app)
+{%- if cookiecutter.use_celery == "yes" %}
+    register_celery(app)
+{%- endif %}
     register_errorhandlers(app)
     register_shellcontext(app)
     register_commands(app)
@@ -38,6 +42,7 @@ def create_app(config_object="{{cookiecutter.app_name}}.settings"):
 
 def register_extensions(app):
     """Register Flask extensions."""
+    
     bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
@@ -72,6 +77,22 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     return None
 
+
+{%- if cookiecutter.use_celery == "yes" %}
+def register_celery(app=None):
+    app = app or create_app()
+    celery.conf.update(app.config.get("CELERY", {}))
+
+    class ContextTask(celery.Task):
+        """Make celery tasks work with Flask app context"""
+
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return self.run(*args, **kwargs)
+
+    celery.Task = ContextTask
+    return celery
+{%- endif %}
 
 def register_errorhandlers(app):
     """Register error handlers."""

@@ -52,3 +52,9 @@ Flask-DebugToolbar==0.13.1
 
 # Environment variable parsing
 environs==9.5.0
+
+{%- if cookiecutter.use_celery == "yes" %}
+# Celery
+celery>=5.0.0
+
+{%- endif %}

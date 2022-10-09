@@ -20,10 +20,19 @@ docker-compose-stop-db:
 	docker-compose -f docker-compose-db.yaml stop
 
 docker-compose-up:
+{%- if cookiecutter.use_celery == "yes"%}
+	docker-compose stop celery # stop celery to avoid conflicts with celery tests
+{%- endif %}
 	docker-compose up -d flask-dev
+{%- if cookiecutter.use_celery == "yes"%}
+	docker-compose start celery
+{%- endif %}
 
 docker-compose-stop:
 	docker-compose stop
+{%- if cookiecutter.use_celery == "yes"%}
+	docker-compose stop celery
+{%- endif %}
 
 docker-compose-logs:
 	docker-compose logs --tail=100 -f

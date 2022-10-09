@@ -22,6 +22,15 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 CACHE_TYPE = "simple"  # Can be "memcached", "redis", etc.
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+{%- if cookiecutter.use_celery == "yes" %}
+CELERY = {
+    "broker_url": env.str("CELERY_BROKER_URL"),
+    "result_backend": env.str("CELERY_RESULT_BACKEND_URL"),
+}
+{%- endif %}
+
+
 try:
     from {{cookiecutter.app_name}}.local_setting import *
 except:
