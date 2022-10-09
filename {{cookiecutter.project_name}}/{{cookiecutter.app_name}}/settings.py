@@ -23,6 +23,6 @@ CACHE_TYPE = "simple"  # Can be "memcached", "redis", etc.
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 try:
-    from video_content_search.local_setting import *
+    from {{cookiecutter.app_name}}.local_setting import *
 except:
     pass
