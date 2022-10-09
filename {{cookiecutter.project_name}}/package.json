@@ -16,19 +16,21 @@
     "flask-static-digest": "{% if cookiecutter.use_pipenv == 'True' %}pipenv run {% endif %}flask digest compile",
     "lint": "eslint \"assets/js/*.js\""
   },
+  {%- if cookiecutter.github_username != "" %}
   "repository": {
     "type": "git",
     "url": "git+https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}.git"
-  },
-  "author": "{{cookiecutter.full_name}}",
-  "license": "MIT",
-  "engines": {
-    "node": ">={{cookiecutter.node_version}}"
   },
   "bugs": {
     "url": "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}/issues"
   },
   "homepage": "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}#readme",
+  {%- endif %}
+  "author": "{{cookiecutter.full_name}}",
+  "license": "MIT",
+  "engines": {
+    "node": ">={{cookiecutter.node_version}}"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.2.0",
     "bootstrap": "5.2.2",

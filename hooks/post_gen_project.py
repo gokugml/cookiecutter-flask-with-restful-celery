@@ -12,6 +12,7 @@ def clean_extra_package_management_files():
     """Removes either requirements files and folder or the Pipfile."""
     use_pipenv = "{{cookiecutter.use_pipenv}}"
     use_heroku = "{{cookiecutter.use_heroku}}"
+    use_github = "{{cookiecutter.github_username}}"
     to_delete = []
 
     if use_pipenv == "True":
@@ -21,6 +22,9 @@ def clean_extra_package_management_files():
 
     if use_heroku == "False":
         to_delete = to_delete + ["Procfile", "app.json"]
+
+    if use_github == "":
+        to_delete = to_delete + [".github"]
 
     try:
         for file_or_dir in to_delete:
