@@ -10,6 +10,7 @@ from {{cookiecutter.app_name}}.extensions import (
     bcrypt,
     cache,
     csrf_protect,
+    apispec,
     db,
     debug_toolbar,
     flask_static_digest,
@@ -26,6 +27,7 @@ def create_app(config_object="{{cookiecutter.app_name}}.settings"):
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
     register_extensions(app)
+    register_apispec(app)
     register_blueprints(app)
     register_errorhandlers(app)
     register_shellcontext(app)
@@ -46,6 +48,23 @@ def register_extensions(app):
     flask_static_digest.init_app(app)
     return None
 
+def register_apispec(app):
+    """Configure APISpec for swagger support"""
+    apispec.init_app(app, security=[{"jwt": []}])
+    apispec.spec.components.security_scheme(
+        "jwt", {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
+    )
+    apispec.spec.components.schema(
+        "PaginatedResult",
+        {
+            "properties": {
+                "total": {"type": "integer"},
+                "pages": {"type": "integer"},
+                "next": {"type": "string"},
+                "prev": {"type": "string"},
+            }
+        },
+    )
 
 def register_blueprints(app):
     """Register Flask blueprints."""
