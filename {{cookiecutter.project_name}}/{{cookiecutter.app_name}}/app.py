@@ -13,6 +13,7 @@ from {{cookiecutter.app_name}}.extensions import (
     csrf_protect,
     apispec,
     db,
+    ma,
     debug_toolbar,
     flask_static_digest,
     login_manager,
@@ -46,6 +47,7 @@ def register_extensions(app):
     bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
+    ma.init_app(app)
     csrf_protect.init_app(app)
     login_manager.init_app(app)
     debug_toolbar.init_app(app)

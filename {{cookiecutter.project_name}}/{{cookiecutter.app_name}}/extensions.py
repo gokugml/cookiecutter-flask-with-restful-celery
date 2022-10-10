@@ -5,6 +5,7 @@ from flask_caching import Cache
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
 {%- if cookiecutter.use_celery == "yes" %}
 from celery import Celery
 {%- endif %}
@@ -18,6 +19,7 @@ bcrypt = Bcrypt()
 csrf_protect = CSRFProtect()
 login_manager = LoginManager()
 db = SQLAlchemy()
+ma = Marshmallow()
 migrate = Migrate()
 {%- if cookiecutter.use_celery == "yes" %}
 celery = Celery()
