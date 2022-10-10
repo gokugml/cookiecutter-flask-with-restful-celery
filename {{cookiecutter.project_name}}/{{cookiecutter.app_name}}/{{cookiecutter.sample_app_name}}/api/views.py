@@ -2,6 +2,7 @@ from flask import jsonify, make_response, request
 from flask_restful import Resource
 
 from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.models import Sample, db
+from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.tasks import dummy_task
 from {{cookiecutter.app_name}}.utils.pagination import paginate
 
 from .serializers import SampleSchema
@@ -105,3 +106,19 @@ class SampleListResource(Resource):
             ),
             200,
         )
+
+class CeleryResource(Resource):
+    def get(self):
+        
+        task_id = dummy_task.delay()
+        res = task_id.get()
+        return make_response(
+            jsonify(
+                {
+                    "message": f"success, {task_id}",
+                    "data": f"{res}",
+                }
+            ),
+            200,
+        )
+    

@@ -80,9 +80,7 @@ def register_blueprints(app):
     app.register_blueprint(urls.blueprint)
     return None
 
-
-{%- if cookiecutter.use_celery == "yes" %}
-
+{% if cookiecutter.use_celery == "yes" -%}
 def register_celery(app=None):
     app = app or create_app()
     celery.conf.update(app.config.get("CELERY", {}))

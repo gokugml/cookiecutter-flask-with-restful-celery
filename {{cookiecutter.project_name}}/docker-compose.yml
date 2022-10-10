@@ -39,7 +39,7 @@ services:
       GUNICORN_WORKERS: 4
     <<: *default_volumes
 
-{%- if cookiecutter.use_celery == "yes" %}
+{% if cookiecutter.use_celery == "yes" -%}
   celery:
     image: "{{cookiecutter.app_name}}-development"
     command: "celery -A {{cookiecutter.app_name}}.celery_app:app worker"
@@ -47,9 +47,6 @@ services:
       - ./.env
     volumes:
       - .:/app
-    environment:
-      - CELERY_BROKER_URL=redis://{{cookiecutter.project_name}}-redis
-      - CELERY_RESULT_BACKEND_URL=redis://{{cookiecutter.project_name}}-redis
 {%- endif %}
 
   manage:

@@ -53,10 +53,10 @@ Flask-DebugToolbar==0.13.1
 # Environment variable parsing
 environs==9.5.0
 
-{%- if cookiecutter.use_celery == "yes" %}
+{% if cookiecutter.use_celery == "yes" -%}
 # Celery
 {%- if cookiecutter.python_version == "3.7" %}
 importlib-metadata<5.0 # fix import bug if pythonversion = 3.7
 {%- endif %}
 celery>=5.0.0
-{%- endif %}
+{% endif %}

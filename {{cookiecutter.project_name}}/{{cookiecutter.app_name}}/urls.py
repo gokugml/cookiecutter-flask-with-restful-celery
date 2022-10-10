@@ -1,11 +1,13 @@
-from flask import Blueprint, jsonify, current_app
+from flask import Blueprint, current_app, jsonify
 from flask_restful import Api
 from marshmallow import ValidationError
 from {{cookiecutter.app_name}}.extensions import apispec
-from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.api.views import (
-    SampleListResource, SampleResource)
 from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.api.serializers import SampleSchema
-
+from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.api.views import (
+    CeleryResource,
+    SampleListResource,
+    SampleResource,
+    )
 '''
 1. register api/url
 2. register_views for apispec in register_views()
@@ -13,6 +15,7 @@ from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.api.serializers 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 api_v1 = Api(blueprint, prefix='/v1')
 api_v1.add_resource(SampleResource, '/sample/<int:id>', endpoint='sample')
+api_v1.add_resource(CeleryResource, '/sample/celery_task', endpoint='celery')
 api_v1.add_resource(SampleListResource, '/sample/', endpoint='samplelist')
 
 
