@@ -5,7 +5,7 @@ import sys
 
 from flask import Flask, render_template
 
-from {{cookiecutter.app_name}} import commands, public, user
+from {{cookiecutter.app_name}} import commands, public, user, urls
 from {{cookiecutter.app_name}}.extensions import (
     bcrypt,
     cache,  
@@ -75,10 +75,12 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(urls.blueprint)
     return None
 
 
 {%- if cookiecutter.use_celery == "yes" %}
+
 def register_celery(app=None):
     app = app or create_app()
     celery.conf.update(app.config.get("CELERY", {}))
