@@ -25,14 +25,11 @@ docker-compose-up:
 {%- endif %}
 	docker-compose up -d flask-dev
 {%- if cookiecutter.use_celery == "yes"%}
-	docker-compose start celery
+	docker-compose up -d celery
 {%- endif %}
 
 docker-compose-stop:
 	docker-compose stop
-{%- if cookiecutter.use_celery == "yes"%}
-	docker-compose stop celery
-{%- endif %}
 
 docker-compose-logs:
 	docker-compose logs --tail=100 -f
