@@ -15,6 +15,94 @@ register Resource in {{cookiecutter.app_name}}.urls
 
 
 class SampleResource(Resource):
+    """Single object resource
+
+    ---
+    get:
+      tags:
+        - api
+      summary: Get a user
+      description: Get a single user by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: SampleSchema
+        404:
+          description: user does not exists
+    put:
+      tags:
+        - api
+      summary: Update a user
+      description: Update a single user by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              SampleSchema
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: user updated
+                  user: SampleSchema
+        404:
+          description: user does not exists
+    delete:
+      tags:
+        - api
+      summary: Delete a user
+      description: Delete a single user by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: user deleted
+        404:
+          description: user does not exists
+    """
+    def get(self, id):
+
+        schema = SampleSchema()
+        object = Sample.get_by_id(id)
+        return make_response(
+            jsonify(
+                {
+                    "message": "success",
+                    "data": schema.dump(object),
+                }
+            ),
+            200,
+        )
+    
     def post(self):
         schema = SampleSchema()
         sample = schema.load(request.json)
@@ -26,20 +114,6 @@ class SampleResource(Resource):
                 {
                     "message": "success",
                     "context": str(object),
-                }
-            ),
-            200,
-        )
-
-    def get(self, id):
-
-        schema = SampleSchema()
-        object = Sample.get_by_id(id)
-        return make_response(
-            jsonify(
-                {
-                    "message": "success",
-                    "data": schema.dump(object),
                 }
             ),
             200,
