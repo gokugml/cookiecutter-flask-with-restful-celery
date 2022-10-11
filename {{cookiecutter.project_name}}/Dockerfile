@@ -13,6 +13,15 @@ COPY --from=node /usr/lib/ /usr/lib/
 RUN true
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 
+{%- if cookiecutter.require_gcc == "yes" %}
+RUN apt-get update && \
+    apt-get -y install gcc mono-mcs && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+{%- if cookiecutter.custom_pipconf == "yes" %}
+COPY pip.conf pip.conf
+ENV PIP_CONFIG_FILE=pip.conf
+{%- endif %}
 {%- if cookiecutter.use_pipenv == "True" %}
 COPY ["Pipfile", "shell_scripts/auto_pipenv.sh", "./"]
 RUN pip install --no-cache pipenv

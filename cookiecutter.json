@@ -10,5 +10,7 @@
   "use_pipenv": ["False", "True"],
   "python_version": ["3.10", "3.9", "3.8", "3.7"],
   "node_version": ["16", "14", "12"],
-  "use_heroku": ["False", "True"]
+  "use_heroku": ["False", "True"],
+  "custom_pipconf": ["no", "yes"],
+  "require_gcc": ["no", "yes"]
 }
