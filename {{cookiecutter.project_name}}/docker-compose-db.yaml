@@ -24,6 +24,19 @@ services:
     # restart: always
     command: redis-server /etc/redis/redis.conf
 
+
+{% if cookiecutter.need_mongo == "yes" -%}
+  mongo:
+    platform: linux/amd64 # 不加这行会报：ERROR: no matching manifest for linux/arm64/v8 in the manifest list entries
+    container_name: {{cookiecutter.project_name}}-mongo
+    image: mongo:latest # 镜像会从 docker hub 中拉取。地址: https://hub.docker.com/_/mysql?
+    ports:
+      - "27017:27017" # 冒号左边的宿主机的端口，右边的是容器的端口
+    volumes:
+      - ./tmp/mongo/data:/data/db # ./tmp/mongo/data 是你宿主机的路径；/data 是容器内的路径，容器内的 mongo 会把需要持久化的数据都保存到 /data 目录下
+    # restart: always # 如果容器停止，请始终重新启动容器。  如果是手动停止的，只有在 Docker daemon 重启或者容器本身手动重启时才会重启。https://docs.docker.com/config/containers/start-containers-automatically/
+{%- endif %}
+
   # memcahed:
   #   container_name: {{cookiecutter.project_name}}-memcahed
   #   image: memcached:latest
