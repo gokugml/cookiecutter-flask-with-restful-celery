@@ -28,11 +28,11 @@ def test(coverage, files):
     """Run the tests."""
     import pytest
 
-    args = [TEST_PATH, "--verbose"]
+    args = [TEST_PATH, "-vs"]
     if coverage:
         args.append("--cov={{cookiecutter.app_name}}")
     if files:
-        args.append(files)
+        args[0] = files
     rv = pytest.main(args)
     exit(rv)
 
