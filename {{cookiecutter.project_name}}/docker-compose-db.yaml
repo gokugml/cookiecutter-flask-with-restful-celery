@@ -25,7 +25,7 @@ services:
     command: redis-server /etc/redis/redis.conf
 
 
-{% if cookiecutter.need_mongo == "yes" -%}
+{% if cookiecutter.need_mongo == "yes" %}
   mongo:
     platform: linux/amd64 # 不加这行会报：ERROR: no matching manifest for linux/arm64/v8 in the manifest list entries
     container_name: {{cookiecutter.project_name}}-mongo

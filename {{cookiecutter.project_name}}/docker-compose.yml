@@ -39,14 +39,14 @@ services:
       GUNICORN_WORKERS: 4
     <<: *default_volumes
 
-{% if cookiecutter.use_celery == "yes" -%}
-    celery:
-      image: "{{cookiecutter.app_name}}-development"
-      command: "celery -A {{cookiecutter.app_name}}.celery_app:app worker"
-      env_file:
-        - ./.env
-      volumes:
-        - .:/app
+{% if cookiecutter.use_celery == "yes" %}
+  celery:
+    image: "{{cookiecutter.app_name}}-development"
+    command: "celery -A {{cookiecutter.app_name}}.celery_app:app worker"
+    env_file:
+      - ./.env
+    volumes:
+      - .:/app
 {%- endif %}
 
   manage:
