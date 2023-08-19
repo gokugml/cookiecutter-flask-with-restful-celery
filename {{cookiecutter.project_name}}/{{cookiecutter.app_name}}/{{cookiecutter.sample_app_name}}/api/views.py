@@ -150,6 +150,49 @@ class SampleResource(Resource):
 
 
 class SampleListResource(Resource):
+    """Creation and get_all
+
+    ---
+    get:
+      tags:
+        - api
+      summary: Get a list of users
+      description: Get a list of paginated users
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResult'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/UserSchema'
+    post:
+      tags:
+        - api
+      summary: Create a user
+      description: Create a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              UserSchema
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: user created
+                  user: UserSchema
+    """
     def get(self):
         schema = SampleSchema(many=True)
         query = Sample.query

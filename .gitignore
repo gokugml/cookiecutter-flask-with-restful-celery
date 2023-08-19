@@ -46,3 +46,6 @@ output/
 
 my_flask_app/
 bower_components
+
+*.DS_Store
+
