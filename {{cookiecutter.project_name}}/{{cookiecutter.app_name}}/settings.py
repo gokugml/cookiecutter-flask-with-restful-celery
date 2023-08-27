@@ -24,10 +24,18 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 {%- if cookiecutter.use_celery == "yes" %}
-CELERY = {
-    "broker_url": env.str("CELERY_BROKER_URL"),
-    "result_backend": env.str("CELERY_RESULT_BACKEND_URL"),
+
+REDIS = {
+    "host": env.str("REDIS_HOST"),
+    "username": env.str("REDIS_USERNAME"),
+    "password": env.str("REDIS_PASSWORD"),
 }
+
+CELERY = {
+    "broker_url": f'redis://{REDIS["username"]}:{REDIS["password"]}@{REDIS["host"]}:6379/0',
+    "result_backend": f'redis://{REDIS["username"]}:{REDIS["password"]}@{REDIS["host"]}:6379/1',
+}
+
 {%- endif %}
 
 

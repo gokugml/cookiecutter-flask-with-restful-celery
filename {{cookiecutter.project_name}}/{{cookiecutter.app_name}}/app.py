@@ -83,6 +83,14 @@ def register_blueprints(app):
 {% if cookiecutter.use_celery == "yes" -%}
 def register_celery(app=None):
     app = app or create_app()
+    app.logger.info(f'celery_setting task_always_eager: {app.config.get("task_always_eager")}')
+    app.logger.info(f'RUNNING_ENV {app.config.get("RUNNING_ENV")}')
+    
+    if app.config.get("task_always_eager", False) == True:
+        celery_config = app.config.get("CELERY_CONFIG",{})
+        celery_config.update({"task_always_eager": True})
+        app.config.update(celery_config)
+        
     celery.conf.update(app.config.get("CELERY", {}))
 
     class ContextTask(celery.Task):
