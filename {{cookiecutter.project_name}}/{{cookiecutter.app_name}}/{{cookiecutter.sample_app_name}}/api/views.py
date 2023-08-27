@@ -1,11 +1,11 @@
 from flask import jsonify, make_response, request
-from flask_restful import Resource
+from flask_restful import Resource, abort
 
 from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.models import Sample, db
 from {{cookiecutter.app_name}}.{{cookiecutter.sample_app_name}}.tasks import dummy_task
 from {{cookiecutter.app_name}}.utils.pagination import paginate
 
-from .serializers import SampleSchema
+from .serializers import SampleSchema, SampleUrlParamSchema
 
 """
 write Resource(ViewSet in django) in views.py
@@ -194,14 +194,23 @@ class SampleListResource(Resource):
                   user: UserSchema
     """
     def get(self):
+        url_data = request.args
+        url_schema = SampleUrlParamSchema()
+        
+        errors = url_schema.validate(url_data) # if no specific abort() is needed, this .validate() could be skipped #noqa
+        if errors:
+            abort(404, error=str(errors))
+            
+            
+        url_param = url_schema.load(url_data)
         schema = SampleSchema(many=True)
         query = Sample.query
-        # print(query.all())
+        query_set = query.filter_by(**url_param)
         return make_response(
             jsonify(
                 {
                     "message": "success",
-                    "data": paginate(query, schema),
+                    "data": paginate(query_set, schema),
                 }
             ),
             200,

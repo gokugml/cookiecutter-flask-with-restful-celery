@@ -25,3 +25,9 @@ class SampleSchema(ma.SQLAlchemySchema):
         # exclude = (,)
         sqla_session = db.session
         load_instance = True
+
+
+class SampleUrlParamSchema(ma.Schema):
+    id = ma.Integer(unique=True, required=False, allow_none=True)
+    name = ma.String(unique=True, required=False, allow_none=True)
+    email = ma.String(unique=True, required=False, allow_none=True)
